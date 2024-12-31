@@ -62,6 +62,33 @@ namespace ValheimPatch
                     }
                 }
             }
+
+            [HarmonyPatch(typeof(Player), "Awake")]
+            class Player_Patch
+            {
+                [HarmonyPrefix]
+                static void setStamina(Player __instance)
+                {
+                    var staminaRegen = AccessTools.Field(typeof(Player), "m_staminaRegen");
+                    var staminaRegenDelay = AccessTools.Field(typeof(Player), "m_staminaRegenDelay");
+                    var staminaRunDrain = AccessTools.Field(typeof(Player), "m_runStaminaDrain");
+
+                    if (staminaRegen != null)
+                    {
+                        staminaRegen.SetValue(__instance, 200f);
+                    }
+
+                    if (staminaRegenDelay != null)
+                    {
+                        staminaRegenDelay.SetValue(__instance, 0f);
+                    }
+
+                    if (staminaRunDrain != null)
+                    {
+                        staminaRunDrain.SetValue(__instance, 0f);
+                    }
+                }
+            }
         }
     }
 }
