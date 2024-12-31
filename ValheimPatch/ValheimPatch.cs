@@ -30,25 +30,43 @@ namespace ValheimPatch
             // reference the original valheim m_craftRequireRoof and m_craftRequireFire properties
             // to be changed in BepInEx
             [HarmonyPrefix]
-            static void setCraftingPatch(ref bool __m_craftRequireFire, ref bool __m_craftRequireRoof)
+            static void setCraftingPatch(CraftingStation __instance)
             {
-                __m_craftRequireFire = false; // change initial value of m_craftRequireFire to false
-                __m_craftRequireRoof = false;
+                // Gunakan refleksi untuk mengubah properti field m_craftRequireRoof dan m_craftRequireFire
+                var roofField = AccessTools.Field(typeof(CraftingStation), "m_craftRequireRoof");
+                var fireField = AccessTools.Field(typeof(CraftingStation), "m_craftRequireFire");
+
+                if (roofField != null)
+                {
+                    roofField.SetValue(__instance, false); // Ubah nilai m_craftRequireRoof menjadi false
+                }
+
+                if (fireField != null)
+                {
+                    fireField.SetValue(__instance, false); // Ubah nilai m_craftRequireFire menjadi false
+                }
+
+                Debug.Log("Patched CraftingStation: m_craftRequireRoof and m_craftRequireFire set to false");
             }
         }
 
-        //m_walkSpeed
         [HarmonyPatch(typeof(Character), "Awake")]
         class Character_Patch
         {
             [HarmonyPrefix]
-            static void setWalkSpeed(ref float __m_walkSpeed)
+            static void setSpeed(Character __instance)
             {
-                __m_walkSpeed = 15f; // set walk speed of character
+                var walkSpeed = AccessTools.Field(typeof(Character), "m_walkSpeed");
+                var speed = AccessTools.Field(typeof(Character), "m_speed");
+                if(walkSpeed != null)
+                {
+                    walkSpeed.SetValue(__instance, 40f);
+                }
+                if (speed != null)
+                {
+                    speed.SetValue(__instance, 40f);
+                }
             }
         }
-
     }
-
-
 }
