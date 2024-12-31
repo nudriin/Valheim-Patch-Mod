@@ -48,23 +48,18 @@ namespace ValheimPatch
 
                 Debug.Log("Patched CraftingStation: m_craftRequireRoof and m_craftRequireFire set to false");
             }
-        }
 
-        [HarmonyPatch(typeof(Character), "Awake")]
-        class Character_Patch
-        {
-            [HarmonyPrefix]
-            static void setSpeed(Character __instance)
+            [HarmonyPatch(typeof(Character), "Awake")]
+            class Character_Patch
             {
-                var walkSpeed = AccessTools.Field(typeof(Character), "m_walkSpeed");
-                var speed = AccessTools.Field(typeof(Character), "m_speed");
-                if(walkSpeed != null)
+                [HarmonyPrefix]
+                static void setSpeed(Character __instance)
                 {
-                    walkSpeed.SetValue(__instance, 40f);
-                }
-                if (speed != null)
-                {
-                    speed.SetValue(__instance, 40f);
+                    var speed = AccessTools.Field(typeof(Character), "m_speed");
+                    if (speed != null)
+                    {
+                        speed.SetValue(__instance, 20f);
+                    }
                 }
             }
         }
