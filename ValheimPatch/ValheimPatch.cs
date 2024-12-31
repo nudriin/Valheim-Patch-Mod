@@ -55,10 +55,10 @@ namespace ValheimPatch
                 [HarmonyPrefix]
                 static void setSpeed(Character __instance)
                 {
-                    var speed = AccessTools.Field(typeof(Character), "m_speed");
-                    if (speed != null)
+                    var runSpeed = AccessTools.Field(typeof(Character), "m_runSpeed");
+                    if (runSpeed != null)
                     {
-                        speed.SetValue(__instance, 20f);
+                        runSpeed.SetValue(__instance, 30f);
                     }
                 }
             }
