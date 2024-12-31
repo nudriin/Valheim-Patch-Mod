@@ -9,7 +9,7 @@ namespace ValheimPatch
     public class ValheimPatch : BaseUnityPlugin
     {
         private const string modGUI = "Nudriin.ValheimPatch";
-        private const string modName = "Patch by nudriin";
+        private const string modName = "Valheim patch by nudriin";
         private const string modVersion = "1.0.0";
 
         private readonly Harmony harmony = new Harmony(modGUI);
@@ -47,20 +47,6 @@ namespace ValheimPatch
                 }
 
                 Debug.Log("Patched CraftingStation: m_craftRequireRoof and m_craftRequireFire set to false");
-            }
-
-            [HarmonyPatch(typeof(Character), "Awake")]
-            class Character_Patch
-            {
-                [HarmonyPrefix]
-                static void setSpeed(Character __instance)
-                {
-                    var runSpeed = AccessTools.Field(typeof(Character), "m_runSpeed");
-                    if (runSpeed != null)
-                    {
-                        runSpeed.SetValue(__instance, 30f);
-                    }
-                }
             }
 
             [HarmonyPatch(typeof(Player), "Awake")]
