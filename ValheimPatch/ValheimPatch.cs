@@ -32,18 +32,17 @@ namespace ValheimPatch
             [HarmonyPrefix]
             static void setCraftingPatch(CraftingStation __instance)
             {
-                // Gunakan refleksi untuk mengubah properti field m_craftRequireRoof dan m_craftRequireFire
                 var roofField = AccessTools.Field(typeof(CraftingStation), "m_craftRequireRoof");
                 var fireField = AccessTools.Field(typeof(CraftingStation), "m_craftRequireFire");
 
                 if (roofField != null)
                 {
-                    roofField.SetValue(__instance, false); // Ubah nilai m_craftRequireRoof menjadi false
+                    roofField.SetValue(__instance, false);
                 }
 
                 if (fireField != null)
                 {
-                    fireField.SetValue(__instance, false); // Ubah nilai m_craftRequireFire menjadi false
+                    fireField.SetValue(__instance, false); 
                 }
 
                 Debug.Log("Patched CraftingStation: m_craftRequireRoof and m_craftRequireFire set to false");
@@ -55,9 +54,24 @@ namespace ValheimPatch
                 [HarmonyPrefix]
                 static void setStamina(Player __instance)
                 {
+                    var baseStamina = AccessTools.Field(typeof(Player), "m_baseStamina");
+                    // var health = AccessTools.Field(typeof(Character), "m_baseHP");
                     var staminaRegen = AccessTools.Field(typeof(Player), "m_staminaRegen");
                     var staminaRegenDelay = AccessTools.Field(typeof(Player), "m_staminaRegenDelay");
                     var staminaRunDrain = AccessTools.Field(typeof(Player), "m_runStaminaDrain");
+                    var dodgeStaminaUsage = AccessTools.Field(typeof(Player), "m_dodgeStaminaUsage");
+                    //m_baseStamina
+
+                    if (baseStamina != null)
+                    {
+                        baseStamina.SetValue(__instance, 1000f);
+                    }
+                    /*
+                    if (health != null)
+                    {
+                        health.SetValue(__instance, 1000f);
+                    }
+                    */
 
                     if (staminaRegen != null)
                     {
@@ -73,8 +87,42 @@ namespace ValheimPatch
                     {
                         staminaRunDrain.SetValue(__instance, 0f);
                     }
+
+                    if (dodgeStaminaUsage != null)
+                    {
+                        dodgeStaminaUsage.SetValue(__instance, 0f);
+                    }
                 }
             }
+
+            /*
+            
+            [HarmonyPatch(typeof(Character), "Awake")]
+            class Character_Patch
+            {
+                [HarmonyPrefix]
+                static void setSpeed(Character __instance)
+                {
+                    //var walkSpeed = AccessTools.Field(typeof(Character), "m_walkSpeed");
+                    //var runSpeed = AccessTools.Field(typeof(Character), "m_runSpeed");
+                    var health = AccessTools.Field(typeof(Character), "m_baseHP");
+                   
+                    if (walkSpeed != null)
+                    {
+                        walkSpeed.SetValue(__instance, 25f);
+                    }
+                    
+                    
+                    if (runSpeed != null)
+                    {
+                        runSpeed.SetValue(__instance, 20f);
+                    }
+                    
+
+          
+                }
+            }
+            */
         }
     }
 }
