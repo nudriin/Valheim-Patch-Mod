@@ -60,6 +60,12 @@ namespace ValheimPatch
                     var staminaRegenDelay = AccessTools.Field(typeof(Player), "m_staminaRegenDelay");
                     var staminaRunDrain = AccessTools.Field(typeof(Player), "m_runStaminaDrain");
                     var dodgeStaminaUsage = AccessTools.Field(typeof(Player), "m_dodgeStaminaUsage");
+                    var eitr = AccessTools.Field(typeof(Player), "m_eitr");
+                    var eitrRegen = AccessTools.Field(typeof(Player), "m_eiterRegen");
+                    var eitrRegenDelay = AccessTools.Field(typeof(Player), "m_eitrRegenDelay");
+                    //m_eitr
+                    //m_eiterRegen
+                    //m_eitrRegenDelay
                     //m_baseStamina
 
                     if (baseStamina != null)
@@ -92,8 +98,23 @@ namespace ValheimPatch
                     {
                         dodgeStaminaUsage.SetValue(__instance, 0f);
                     }
+                    if (eitr != null)
+                    {
+                        eitr.SetValue(__instance, 1000f);
+                    }
+
+                    if (eitrRegen != null)
+                    {
+                        eitrRegen.SetValue(__instance, 1000f);
+                    }
+
+                    if (eitrRegenDelay != null)
+                    {
+                        eitrRegenDelay.SetValue(__instance, 0f);
+                    }
                 }
             }
+
 
             /*
             
